@@ -1,5 +1,6 @@
 using Agendamento.Data;
 using Microsoft.EntityFrameworkCore;
+using Agendamento.Services;
 
 namespace Agendamento
 {
@@ -20,6 +21,8 @@ namespace Agendamento
             // Registra o SeedingService na injeção de dependência.
             // AddScoped cria uma instância do serviço para cada escopo/requisição.
             builder.Services.AddScoped<SeedingService>();
+
+            builder.Services.AddScoped<MedicoService>();
 
             var app = builder.Build();
 

@@ -1,0 +1,32 @@
+﻿@model List<Agendamento.Models.Medico>
+
+
+	<h1>Médicos</h1>
+	<p>
+		<a asp-action="Inserir" class="btn btn-success">Inserir</a>
+	</p>
+
+	<table class="table table table-striped table-hover">
+		<thead>
+
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>CRM</th>
+				<th>Especialidade</th>
+			</tr>
+		</thead>
+		<tbody>
+		@foreach (var m in Model)
+		{
+			<tr>
+				<th>@m.Id</th>
+				<th>@m.Nome</th>
+				<th>@m.Crm</th>
+				<th>@m.Especialidade</th>
+			</tr>
+
+		}
+
+		</tbody>
+	</table>
