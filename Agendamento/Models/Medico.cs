@@ -16,6 +16,6 @@ namespace Agendamento.Models
 
         [Required]
         [MaxLength(50)]
-        public string? Especialidade  { get; set; }
+        public string? Especialidade { get; set; }
     }
 }

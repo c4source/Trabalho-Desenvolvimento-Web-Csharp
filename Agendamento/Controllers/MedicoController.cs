@@ -1,54 +1,117 @@
-﻿using Agendamento.Models;
+﻿using System.Diagnostics;
+using Agendamento.Data;
+using Agendamento.Models;
 using Agendamento.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Agendamento.Controllers
 {
-    public class MedicoController : Controller  
+    public class MedicoController : Controller
     {
-
-
         private readonly MedicoService _medicoService;
 
-        public MedicoController(MedicoService medicoService) {
-
+        public MedicoController(MedicoService medicoService)
+        {
             _medicoService = medicoService;
         }
 
-
-        //var temporario = MedicoService.Listar();
-
-        public IActionResult Index() 
+        public IActionResult Index()
         {
-            var LisTaMedicos = _medicoService.Listar();
-            return View(LisTaMedicos);
-
-
+            var listaMedicos = _medicoService.Listar();
+            return View(listaMedicos);
         }
 
-        public IActionResult Inserir() 
-        { 
-                
+        public IActionResult Inserir()
+        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Inserir(Medico m) 
+        [ValidateAntiForgeryToken]
+        public IActionResult Inserir(Medico medico)
         {
-
-            if (!ModelState.IsValid) 
-            {
-
-                return View(m);
-            
-            }
-
-
-            _medicoService.Inserir(m);
+            _medicoService.Inserir(medico);
             return RedirectToAction(nameof(Index));
-        
         }
 
+        public IActionResult Detalhar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var obj = _medicoService.EncontrarId(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        public IActionResult Editar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _medicoService.EncontrarId(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(Medico medico)
+        {
+            _medicoService.Atualizar(medico);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Remover(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _medicoService.EncontrarId(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Remover(int id)
+        {
+            _medicoService.Remover(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Error(string message)
+        {
+            var errorViewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(errorViewModel);
+        }
     }
 }
