@@ -1,6 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations; //Attributes do C#
-
+using System.ComponentModel.DataAnnotations.Schema;
 /*
  
 Data Annotations: São ATTRIBUTES colocados nas propriedades do MODEL 
@@ -15,7 +15,7 @@ Data Annotations: São ATTRIBUTES colocados nas propriedades do MODEL
 
  */
 
-namespace Agendamento.Models
+namespace Agendamento.Models 
 {
     public class Paciente
     {
@@ -40,7 +40,8 @@ namespace Agendamento.Models
         [Required] //Endereço Obrigatorio 
         [Display(Name = "Data de nascimento")] // Interface que mostra para o usuario a propriedade como "Data de Nascimento"
         //Vai ser ultil no HTML, o razor consegue mostrar: "Data de nascimento"
-        [DataType(DataType.Date)] //Indica que o data deve ser tratado como data. Na view, ajudara a representar o campo adequado
+        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]//Indica que o data deve ser tratado como data. Na view, ajudara a representar o campo adequado
         public DateTime? DataNascimento { get; set; }
 
 

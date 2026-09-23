@@ -26,14 +26,11 @@ namespace Agendamento.Data
         {
             // Utiliza o contexto para consultar a tabela Medicos.
             // Any() retorna true quando a tabela já possui pelo menos um registro.
-            if (_context.Medicos.Any())
-            {
-                // Encerra o método para evitar a inserção de dados duplicados.
-                return;
 
-            }
-            else
+            //Só popula a tabela Medicos se estiver vazia no banco
+            if (!_context.Medicos.Any())
             {
+
                 // Cria o primeiro objeto que será inserido no banco.
                 Medico m1 = new Medico
                 {
@@ -59,6 +56,40 @@ namespace Agendamento.Data
                 _context.SaveChanges();
 
             }
+
+
+            if (!_context.Pacientes.Any()) 
+            {
+
+                 Paciente p1 = new Paciente
+                  {
+
+                        Nome = "Gabriel",
+                        Cpf = "111.111.111-11",
+                        Telefone = "(18) 99999-1111",
+                        Endereco = "Rua das Flores, 100",
+                        DataNascimento = new DateTime(1995, 5, 10)
+
+
+                  };
+
+                  Paciente p2 = new Paciente
+                   {
+
+                        Nome            = "Mariana Souza",
+                        Cpf             = "222.222.222-22",
+                        Telefone        = "(18) 99999-2222",
+                        Endereco        = "Avenida Brasil, 200",
+                        DataNascimento = new DateTime(2000, 8, 20)
+
+                   };
+
+                 //Add os objetos ao contexto
+                 //Salva as mudanças 
+                 _context.Pacientes.AddRange(p1, p2);
+                 _context.SaveChanges();
+                
+            }    
         }
     }
 }
