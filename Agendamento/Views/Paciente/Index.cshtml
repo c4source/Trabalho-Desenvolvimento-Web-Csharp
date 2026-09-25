@@ -1,0 +1,51 @@
+﻿@model List<Agendamento.Models.Paciente>
+
+<h1>Pacientes</h1>
+
+<p>
+    <a asp-action="Inserir" class="btn btn-success btn-lg mb-4">
+        Inserir
+    </a>
+</p>
+
+<table class="table align-middle table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Data de nascimento</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Nome</td>
+                <td>@p.Cpf</td>
+                <td>@p.Telefone</td>
+                <td>@p.Endereco</td>
+                <td>@(p.DataNascimento?.ToString("dd/MM/yyyy"))</td>
+
+                <td>
+                    <a asp-action="Editar"
+                       asp-route-id="@p.Id"
+                       class="btn btn-outline-info">
+                        Editar
+                    </a>
+
+                    <a asp-action="Remover"
+                       asp-route-id="@p.Id"
+                       class="btn btn-outline-danger">
+                        Remover
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
