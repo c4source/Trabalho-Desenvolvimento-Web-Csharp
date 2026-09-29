@@ -53,6 +53,13 @@ namespace Agendamento.Services
         
         }
 
-      
+        //Atualizar
+        public void Atualizar(Paciente paciente)
+        {
+            _context.Pacientes.Update(paciente);
+            _context.SaveChanges();
+        }
+
+
     }
 }

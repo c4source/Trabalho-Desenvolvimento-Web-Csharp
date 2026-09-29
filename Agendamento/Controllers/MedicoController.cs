@@ -94,6 +94,11 @@ namespace Agendamento.Controllers
             return View(obj);
         }
 
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Remover(int id)
@@ -102,6 +107,8 @@ namespace Agendamento.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
 
         public IActionResult Error(string message)
         {

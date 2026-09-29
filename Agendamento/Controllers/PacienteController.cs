@@ -1,6 +1,7 @@
-﻿using Agendamento.Services;
+﻿using Agendamento.Models;
+using Agendamento.Services;
 using Microsoft.AspNetCore.Mvc;
-using Agendamento.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agendamento.Controllers
 {
@@ -64,5 +65,38 @@ namespace Agendamento.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Editar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var paciente = _pacienteService.EncontrarId(id.Value);
+
+            if (paciente == null)
+            {
+                return NotFound();
+            }
+
+            return View(paciente);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(Paciente paciente)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(paciente);
+            }
+
+            _pacienteService.Atualizar(paciente);
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
